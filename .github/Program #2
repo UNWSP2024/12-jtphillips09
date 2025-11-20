@@ -1,0 +1,49 @@
+import tkinter as tk
+from tkinter import messagebox
+
+# Prices for each service
+SERVICE_PRICES = {
+    "Oil Change": 30.00,
+    "Lube Job": 20.00,
+    "Radiator Flush": 40.00,
+    "Transmission Fluid": 100.00,
+    "Inspection": 35.00,
+    "Muffler Replacement": 200.00,
+    "Tire Rotation": 20.00
+}
+
+
+def calculate_total():
+    total = 0
+    for service, var in check_vars.items():
+        if var.get() == 1:
+            total += SERVICE_PRICES[service]
+    result_label.config(text=f"Total Charges: ${total:.2f}")
+
+
+# Main window
+root = tk.Tk()
+root.title("Joe's Automotive Service Calculator")
+root.geometry("350x350")
+
+# Frame for checkboxes
+frame = tk.Frame(root)
+frame.pack(pady=10)
+
+check_vars = {}
+for service, price in SERVICE_PRICES.items():
+    var = tk.IntVar()
+    chk = tk.Checkbutton(frame, text=f"{service} - ${price:.2f}", variable=var)
+    chk.pack(anchor='w')
+    check_vars[service] = var
+
+# Calculate button
+calc_button = tk.Button(root, text="Calculate Total", command=calculate_total)
+calc_button.pack(pady=15)
+
+# Result label
+result_label = tk.Label(root, text="Total Charges: $0.00", font=("Arial", 12, "bold"))
+result_label.pack()
+
+# Start main loop
+root.mainloop()
