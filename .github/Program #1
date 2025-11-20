@@ -1,0 +1,46 @@
+import tkinter as tk
+from tkinter import messagebox
+
+
+def calculate_mpg():
+    try:
+        gallons = float(gallons_entry.get())
+        miles = float(miles_entry.get())
+        if gallons == 0:
+            messagebox.showerror("Error", "Gallons cannot be zero.")
+            return
+        mpg = miles / gallons
+        result_label.config(text=f"MPG: {mpg:.2f}")
+    except ValueError:
+        messagebox.showerror("Error", "Please enter valid numbers.")
+
+
+# Main window
+root = tk.Tk()
+root.title("MPG Calculator")
+root.geometry("300x200")
+
+# Gallons input
+gallons_label = tk.Label(root, text="Gallons of gas:")
+gallons_label.pack()
+
+gallons_entry = tk.Entry(root)
+gallons_entry.pack()
+
+# Miles input
+miles_label = tk.Label(root, text="Miles on full tank:")
+miles_label.pack()
+
+miles_entry = tk.Entry(root)
+miles_entry.pack()
+
+# Calculate button
+calc_button = tk.Button(root, text="Calculate MPG", command=calculate_mpg)
+calc_button.pack(pady=10)
+
+# Result label
+result_label = tk.Label(root, text="MPG: ")
+result_label.pack()
+
+# Start GUI loop
+root.mainloop()
