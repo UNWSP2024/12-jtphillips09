@@ -1,0 +1,54 @@
+import tkinter as tk
+from tkinter import messagebox
+
+# Rate categories and prices
+RATES = {
+    "Daytime (6:00 AM - 5:59 PM)": 0.02,
+    "Evening (6:00 PM - 11:59 PM)": 0.12,
+    "Off-Peak (12:00 AM - 5:59 AM)": 0.05
+}
+
+
+def calculate_charge():
+    try:
+        minutes = float(minutes_entry.get())
+        if minutes < 0:
+            messagebox.showerror("Error", "Minutes cannot be negative.")
+            return
+
+        rate = RATES[rate_var.get()]
+        charge = minutes * rate
+        messagebox.showinfo("Call Charge", f"Total Charge: ${charge:.2f}")
+
+    except ValueError:
+        messagebox.showerror("Error", "Please enter a valid number of minutes.")
+
+
+# Main window
+root = tk.Tk()
+root.title("Long-Distance Call Charge Calculator")
+root.geometry("380x300")
+
+# Rate selection
+rate_label = tk.Label(root, text="Select Rate Category:")
+rate_label.pack(pady=5)
+
+rate_var = tk.StringVar(value="Daytime (6:00 AM - 5:59 PM)")
+
+for text in RATES.keys():
+    rb = tk.Radiobutton(root, text=text, variable=rate_var, value=text)
+    rb.pack(anchor='w')
+
+# Minutes input
+minutes_label = tk.Label(root, text="Enter number of minutes:")
+minutes_label.pack(pady=10)
+
+minutes_entry = tk.Entry(root)
+minutes_entry.pack()
+
+# Calculate button
+calc_button = tk.Button(root, text="Calculate Charge", command=calculate_charge)
+calc_button.pack(pady=20)
+
+# Start GUI loop
+root.mainloop()
